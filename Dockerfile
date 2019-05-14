@@ -1,5 +1,7 @@
 from node:7.7.2
 
+LABEL highcharts.export.server=2.0.19
+
 ENV ACCEPT_HIGHCHARTS_LICENSE="YES"
 
 WORKDIR /server

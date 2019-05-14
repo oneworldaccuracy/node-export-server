@@ -5,8 +5,9 @@ LABEL highcharts.export.server=2.0.19
 ENV ACCEPT_HIGHCHARTS_LICENSE="YES"
 
 WORKDIR /server
-COPY . /server
+COPY package*json /server/
 RUN npm install
+COPY . /server
 RUN npm link
 
 WORKDIR /usr/share/fonts/truetype

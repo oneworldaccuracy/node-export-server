@@ -1,0 +1,11 @@
+.git/
+.github/
+.idea/
+node_modules/
+testcharts/
+tests/
+fonts/
+.gitignore
+.dockerignore
+CHANGELOG.md
+README.md

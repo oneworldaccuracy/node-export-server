@@ -5,7 +5,7 @@ LABEL highcharts.export.server=2.0.19
 ENV ACCEPT_HIGHCHARTS_LICENSE="YES"
 
 WORKDIR /server
-COPY package*json /server/
+COPY package.json package-lock.json pre.build.js build.js post.build.js /server/
 RUN npm install
 COPY . /server
 RUN npm link

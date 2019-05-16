@@ -1,27 +1,24 @@
-from node:7.7.2
+FROM node:8.16.0
 
-LABEL highcharts.export.server=2.0.19
+WORKDIR /usr/share/fonts/truetype
+ADD ./fonts/OpenSans-Regular.ttf OpenSans-Regular.ttf
+ADD ./fonts/OpenSans-Light.ttf OpenSans-Light.ttf
+ADD ./fonts/OpenSans-Semibold.ttf OpenSans-Semibold.ttf
+ADD ./fonts/OpenSans-Bold.ttf OpenSans-Bold.ttf
+ADD ./fonts/OpenSans-ExtraBold.ttf OpenSans-ExtraBold.ttf
+ADD ./fonts/OpenSans-Italic.ttf OpenSans-Italic.ttf
+ADD ./fonts/OpenSans-LightItalic.ttf OpenSans-LightItalic.ttf
+ADD ./fonts/OpenSans-BoldItalic.ttf OpenSans-BoldItalic.ttf
+ADD ./fonts/OpenSans-SemiboldItalic.ttf OpenSans-SemiboldItalic.ttf
+ADD ./fonts/OpenSans-ExtraBoldItalic.ttf OpenSans-ExtraBoldItalic.ttf
 
 ENV ACCEPT_HIGHCHARTS_LICENSE="YES"
 
+RUN mkdir /server && chown node:node /server
 WORKDIR /server
-COPY package.json package-lock.json pre.build.js build.js post.build.js /server/
-RUN npm install
-COPY . /server
-RUN npm link
+USER node
+COPY --chown=node:node . .
+RUN npm install --no-optional && npm cache clean --force
 
-WORKDIR /usr/share/fonts/truetype
-ADD https://github.com/oneworldaccuracy/node-export-server/tree/master/fonts/OpenSans-Regular.ttf OpenSans-Regular.ttf
-ADD https://github.com/oneworldaccuracy/node-export-server/tree/master/fonts/OpenSans-Light.ttf OpenSans-Light.ttf
-ADD https://github.com/oneworldaccuracy/node-export-server/tree/master/fonts/OpenSans-Semibold.ttf OpenSans-Semibold.ttf
-ADD https://github.com/oneworldaccuracy/node-export-server/tree/master/fonts/OpenSans-Bold.ttf OpenSans-Bold.ttf
-ADD https://github.com/oneworldaccuracy/node-export-server/tree/master/fonts/OpenSans-ExtraBold.ttf OpenSans-ExtraBold.ttf
-ADD https://github.com/oneworldaccuracy/node-export-server/tree/master/fonts/OpenSans-Italic.ttf OpenSans-Italic.ttf
-ADD https://github.com/oneworldaccuracy/node-export-server/tree/master/fonts/OpenSans-LightItalic.ttf OpenSans-LightItalic.ttf
-ADD https://github.com/oneworldaccuracy/node-export-server/tree/master/fonts/OpenSans-BoldItalic.ttf OpenSans-BoldItalic.ttf
-ADD https://github.com/oneworldaccuracy/node-export-server/tree/master/fonts/OpenSans-SemiboldItalic.ttf OpenSans-SemiboldItalic.ttf
-ADD https://github.com/oneworldaccuracy/node-export-server/tree/master/fonts/OpenSans-ExtraBoldItalic.ttf OpenSans-ExtraBoldItalic.ttf
-
-WORKDIR /
 EXPOSE 8080
-ENTRYPOINT ["highcharts-export-server", "--enableServer", "1", "--port", "8080", "--queueSize", "15", "--workers", "15", "--logLevel", "4"]
+ENTRYPOINT ["/server/bin/cli.js", "--enableServer", "1", "--port", "8080", "--queueSize", "15", "--workers", "15", "--logLevel", "4"]

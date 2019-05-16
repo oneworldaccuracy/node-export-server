@@ -4,8 +4,9 @@
 node_modules/
 testcharts/
 tests/
-fonts/
+Dockerfile
 .gitignore
 .dockerignore
+*.log
 CHANGELOG.md
 README.md

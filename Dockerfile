@@ -14,7 +14,8 @@ ADD ./fonts/OpenSans-ExtraBoldItalic.ttf OpenSans-ExtraBoldItalic.ttf
 
 ENV ACCEPT_HIGHCHARTS_LICENSE="YES"
 
-RUN mkdir /server && chown node:node /server
+RUN mkdir -p /server/tmp && chown -R node:node /server
+VOLUME /server/tmp
 WORKDIR /server
 USER node
 COPY --chown=node:node . .

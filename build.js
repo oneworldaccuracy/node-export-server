@@ -61,7 +61,6 @@ const cdnScriptsOptional = {
   "{{version}}/modules/item-series.js": 1,
   "{{version}}/modules/timeline.js": 1,
   "{{version}}/modules/pareto.js": 1,
-  "{{version}}/modules/pattern-fill.js": 1,
 };
 
 // The scripts here will appear as user prompts
@@ -83,6 +82,7 @@ const cdnScriptsCommon = [
   "{{version}}/modules/solid-gauge.js",
   "{{version}}/modules/heatmap.js",
   "{{version}}/modules/treemap.js",
+  "{{version}}/modules/pattern-fill.js",
 ].concat(Object.keys(cdnScriptsOptional));
 
 const cdnScriptsStyled = [
